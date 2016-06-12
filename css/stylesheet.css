@@ -1,0 +1,20 @@
+
+        #search_results
+        {
+            position:absolute;
+   
+   
+            float:left;
+            overflow-y:auto;
+            top:110px;
+            bottom:100px;
+        }
+
+        #footer
+        {
+            position:absolute;
+            height:60px;
+            bottom:0px;
+        }
+
+       
