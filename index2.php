@@ -5,18 +5,62 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <html>
+    
     <head>
         <meta charset="UTF-8">
         <title></title>
+        
         
         <link  rel ="stylesheet" href="css/stylesheet.css"  />
         <script src="js/jquery-3.0.0.min.js"></script>
         
         <script type="text/javascript">
             
+            function change_property_datatype ()
+            {
+                
+                
+                
+                switch  ($('#property_datatype').val() )
+                {
+                    case "text":
+                        
+                        $('Property charater number: <input id="property_text_charcount">').appendTo(div_article_properties);
+                        
+                        break;
+                        
+                    case "numeric":
+                        
+                        
+                        $('<p>Integer amount: <input id="property_numeric_integer"> Decimal amount: <input id="property_numeric_decimal"> </p>').appendTo(div_article_properties);
+                        
+                        break;
+                        
+                    case "picture":
+                        break;
+                      
+                }
+                
+                
+                
+                    
+                
+                
+            }
+            
             function add_new_input_field ()
             {
-                $('<p> <input id="a"> </p>').appendTo(div_article_properties);
+                $('<p>  Property name :  <input  id="property_name">'+
+                        '<label> Property datatype</label>'+  
+                        '<select id="property_datatype" onchange = \'change_property_datatype();\'  > '+
+                        '<option value="text"> Text  </option>' +
+                        '<option value = "numeric"> Numeric </option>'+
+                        '<option value = "picture"> Picture </option>'+
+                        '</select> '+
+                        '</p>').appendTo(div_article_properties);
+                
+                
+                
                 $('#search_results')
              
              
