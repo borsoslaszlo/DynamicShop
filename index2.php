@@ -25,7 +25,7 @@ and open the template in the editor.
                 {
                     case "text":
                         
-                        $('Property charater number: <input id="property_text_charcount">').appendTo(div_article_properties);
+                        $('<p>Property charater number: <input id="property_text_charcount"></p>').appendTo(div_article_properties);
                         
                         break;
                         
