@@ -1,8 +1,11 @@
 
         #search_results
         {
+            
             position:absolute;
-   
+            
+            
+            
    
             float:left;
             overflow-y:auto;
@@ -17,4 +20,5 @@
             bottom:0px;
         }
 
+        
        
