@@ -16,52 +16,57 @@ and open the template in the editor.
         
         <script type="text/javascript">
             
-            function change_property_datatype ()
+            function change_property_datatype (datatype)
             {
                 
                 
+                $('#div_article_properties div:last').remove();
+                alert (datatype.trim());
+                //switch  ($('#property_datatype').val() )
                 
-                switch  ($('#property_datatype').val() )
+            switch (datatype.trim())
+                
                 {
-                    case "text":
+                    case "Text":
                         
-                        $('<p>Property charater number: <input id="property_text_charcount"></p>').appendTo(div_article_properties);
+                        $('<div><p>Property charater number: <input id="property_text_charcount"></p></div>').appendTo(div_article_properties);
+                        break;
+                    case "Numeric":
+                        $('<div><p>Integer amount: <input id="property_numeric_integer"> Decimal amount: <input id="property_numeric_decimal"> </p></div>').appendTo(div_article_properties);
                         
                         break;
-                        
-                    case "numeric":
-                        
-                        
-                        $('<p>Integer amount: <input id="property_numeric_integer"> Decimal amount: <input id="property_numeric_decimal"> </p>').appendTo(div_article_properties);
-                        
-                        break;
-                        
-                    case "picture":
+                    case "Picture":
                         break;
                       
                 }
                 
                 
-                
-                    
-                
-                
             }
+            
+            function call_change_property_datatype ()
+             {
+                
+                
+                 //change_property_datatype ($('#property_datatype').val($(this).find(":selected")).toString());
+                 
+                 change_property_datatype ($("#property_datatype option:selected").text());
+                 
+             }
+            
             
             function add_new_input_field ()
             {
-                $('<p>  Property name :  <input  id="property_name">'+
+                $('  <p>  Property name :  <input  id="property_name">'+
                         '<label> Property datatype</label>'+  
-                        '<select id="property_datatype" onchange = \'change_property_datatype();\'  > '+
+                        '<select id="property_datatype" onchange = \'call_change_property_datatype();\'> '+
                         '<option value="text"> Text  </option>' +
                         '<option value = "numeric"> Numeric </option>'+
                         '<option value = "picture"> Picture </option>'+
                         '</select> '+
-                        '</p>').appendTo(div_article_properties);
+                        '</p> ') .appendTo(div_article_properties);
                 
+                change_property_datatype ('Text');
                 
-                
-                $('#search_results')
              
              
             }
