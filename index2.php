@@ -16,11 +16,13 @@ and open the template in the editor.
         
         <script type="text/javascript">
             
-            function change_property_datatype (datatype)
+            function change_property_datatype (datatype,divid)
             {
                 
                 
-                $('#div_article_properties  div.datatype_property:last').remove();
+                //$('#div_article_properties  div.datatype_property:last').remove();
+                $('#divid  div.datatype_property:last').remove();
+                
                 alert (datatype.trim());
                 //switch  ($('#property_datatype').val() )
                 
@@ -58,7 +60,7 @@ and open the template in the editor.
             {
                 
                  count_dt_prop = $('div.datatype_and_property').length;
-                
+                 
                 
                 $('<div id ="dt_prop_'+(count_dt_prop+1).toString()+'" class="datatype_and_property">' +
                     '<div class="remove_div" > x </div>'+
