@@ -20,7 +20,7 @@ and open the template in the editor.
             {
                 
                 
-                $('#div_article_properties div:last').remove();
+                $('#div_article_properties  div.datatype_property:last').remove();
                 alert (datatype.trim());
                 //switch  ($('#property_datatype').val() )
                 
@@ -29,10 +29,10 @@ and open the template in the editor.
                 {
                     case "Text":
                         
-                        $('<div><p>Property charater number: <input id="property_text_charcount"></p></div>').appendTo(div_article_properties);
+                        $('<div class="datatype_property"><p>Property charater number: <input id="property_text_charcount"></p></div>').appendTo(div_article_properties);
                         break;
                     case "Numeric":
-                        $('<div><p>Integer amount: <input id="property_numeric_integer"> Decimal amount: <input id="property_numeric_decimal"> </p></div>').appendTo(div_article_properties);
+                        $('<div class="datatype_property"><p>Integer amount: <input id="property_numeric_integer"> Decimal amount: <input id="property_numeric_decimal"> </p></div>').appendTo(div_article_properties);
                         
                         break;
                     case "Picture":
@@ -56,16 +56,34 @@ and open the template in the editor.
             
             function add_new_input_field ()
             {
-                $('  <p>  Property name :  <input  id="property_name">'+
+                
+                 count_dt_prop = $('div.datatype_and_property').length;
+                
+                
+                $('<div id ="dt_prop_'+(count_dt_prop+1).toString()+'" class="datatype_and_property">' +
+                    '<div class="remove_div" > x </div>'+
+                    '<div class = "datatype"> '+
+                    '<div>  Property name :'+
+                    '<input  id="property_name">'+
                         '<label> Property datatype</label>'+  
                         '<select id="property_datatype" onchange = \'call_change_property_datatype();\'> '+
-                        '<option value="text"> Text  </option>' +
-                        '<option value = "numeric"> Numeric </option>'+
-                        '<option value = "picture"> Picture </option>'+
-                        '</select> '+
-                        '</p> ') .appendTo(div_article_properties);
+                        '<option value="Text"> Text  </option>' +
+                        '<option value = "Numeric"> Numeric </option>'+
+                        '<option value = "Picture"> Picture </option>'+
+                        '</select> '+ 
+                        '</div>'+
+                        '</div> ' +
+                        '<div class="datatype_property"><p>Property charater number: <input id="property_text_charcount"></p></div>'+
+                   
+                        '</div>'
+                    ).appendTo(div_article_properties);
                 
-                change_property_datatype ('Text');
+                
+                //default Text
+                 //$('<div class="datatype_property"><p>Property charater number: <input id="property_text_charcount"></p></div>').appendTo(div_article_properties);
+                
+                
+                //change_property_datatype ('Text');
                 
              
              
@@ -161,7 +179,7 @@ and open the template in the editor.
                 <div id="search_results">
             This is the main container.
             
-                                <div id="div_article_properties">
+                    <div id="div_article_properties">
                         
                         
                         
