@@ -28,7 +28,6 @@ and open the template in the editor.
                 
                 
                 
-                
             switch (datatype.trim())
                 
                 {
