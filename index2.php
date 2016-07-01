@@ -59,6 +59,15 @@ and open the template in the editor.
              }
             
             
+            function remove_datatype (divid)
+            {
+                alert (divid);
+                $("#"+divid).remove();
+                
+                
+            }
+                
+            
             
             
             function add_new_input_field ()
@@ -70,7 +79,7 @@ and open the template in the editor.
                 
                 
                 $('<div id ="dt_prop_'+(count_dt_prop+1).toString()+'" class="datatype_and_property">' +
-                    '<div class="remove_div" > x </div>'+
+                    '<div class="remove_div" > <input type="button" onclick=" remove_datatype ($(this).parent().parent().attr(\'id\'));" />  </div>'+
                     '<div class = "datatype"> '+
                     '<div>  Property name :'+
                     '<input  id="property_name">'+
