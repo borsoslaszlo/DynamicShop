@@ -23,8 +23,8 @@ and open the template in the editor.
                 //$('#div_article_properties  div.datatype_property:last').remove();
                 
                 alert (datatype.trim()+","+divid);
-                $('#'+divid+' div.datatype_property:last').remove();
-                
+                //$('#'+divid+' div.datatype_property:last').remove();
+                $('#'+divid+' div.datatype_property').remove();
                 
                 
                 
@@ -75,7 +75,7 @@ and open the template in the editor.
                     '<div>  Property name :'+
                     '<input  id="property_name">'+
                         '<label> Property datatype</label>'+  
-                        '<select class="select_target" id="property_datatype" onchange="call_change_property_datatype($(this).parent().parent().parent().attr(\'id\'));">'+
+                        '<select class="select_target" id="property_datatype_'+count_dt_prop+'" onchange="change_property_datatype($(this).find(\'option:selected\').text(),$(this).parent().parent().parent().attr(\'id\'));">'+
                         '<option value="Text"> Text  </option>' +
                         '<option value = "Numeric"> Numeric </option>'+
                         '<option value = "Picture"> Picture </option>'+
