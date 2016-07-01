@@ -21,46 +21,53 @@ and open the template in the editor.
                 
                 
                 //$('#div_article_properties  div.datatype_property:last').remove();
-                $('#divid  div.datatype_property:last').remove();
                 
-                alert (datatype.trim());
-                //switch  ($('#property_datatype').val() )
+                alert (datatype.trim()+","+divid);
+                $('#'+divid+' div.datatype_property:last').remove();
+                
+                
+                
                 
             switch (datatype.trim())
                 
                 {
                     case "Text":
                         
-                        $('<div class="datatype_property"><p>Property charater number: <input id="property_text_charcount"></p></div>').appendTo(div_article_properties);
+                        $('<div class="datatype_property"><p>Property charater number: <input id="property_text_charcount"></p></div>').appendTo("#"+divid);
                         break;
                     case "Numeric":
-                        $('<div class="datatype_property"><p>Integer amount: <input id="property_numeric_integer"> Decimal amount: <input id="property_numeric_decimal"> </p></div>').appendTo(div_article_properties);
-                        
+                        $('<div class="datatype_property"><p>Integer amount: <input id="property_numeric_integer"> Decimal amount: <input id="property_numeric_decimal"> </p></div>').appendTo("#"+divid);
                         break;
                     case "Picture":
                         break;
                       
                 }
-                
+             
                 
             }
             
-            function call_change_property_datatype ()
+            function call_change_property_datatype (id)
              {
+                
+                
                 
                 
                  //change_property_datatype ($('#property_datatype').val($(this).find(":selected")).toString());
                  
-                 change_property_datatype ($("#property_datatype option:selected").text());
+                 change_property_datatype ($("#property_datatype option:selected").text(),id);
                  
              }
+            
+            
             
             
             function add_new_input_field ()
             {
                 
+                
                  count_dt_prop = $('div.datatype_and_property').length;
-                 
+                
+                
                 
                 $('<div id ="dt_prop_'+(count_dt_prop+1).toString()+'" class="datatype_and_property">' +
                     '<div class="remove_div" > x </div>'+
@@ -68,7 +75,7 @@ and open the template in the editor.
                     '<div>  Property name :'+
                     '<input  id="property_name">'+
                         '<label> Property datatype</label>'+  
-                        '<select id="property_datatype" onchange = \'call_change_property_datatype();\'> '+
+                        '<select class="select_target" id="property_datatype" onchange="call_change_property_datatype($(this).parent().parent().parent().attr(\'id\'));">'+
                         '<option value="Text"> Text  </option>' +
                         '<option value = "Numeric"> Numeric </option>'+
                         '<option value = "Picture"> Picture </option>'+
