@@ -22,7 +22,7 @@ and open the template in the editor.
                 
                 //$('#div_article_properties  div.datatype_property:last').remove();
                 
-                alert (datatype.trim()+","+divid);
+                //alert (datatype.trim()+","+divid);
                 //$('#'+divid+' div.datatype_property:last').remove();
                 $('#'+divid+' div.datatype_property').remove();
                 
@@ -61,7 +61,7 @@ and open the template in the editor.
             
             function remove_datatype (divid)
             {
-                alert (divid);
+                //alert (divid);
                 $("#"+divid).remove();
                 
                 
@@ -84,7 +84,7 @@ and open the template in the editor.
                     '<div>  Property name :'+
                     '<input  id="property_name">'+
                         '<label> Property datatype</label>'+  
-                        '<select class="select_target" id="property_datatype_'+count_dt_prop+'" onchange="change_property_datatype($(this).find(\'option:selected\').text(),$(this).parent().parent().parent().attr(\'id\'));">'+
+                        '<select class="select_target" id="property_datatype_'+(count_dt_prop+1).toString()+'" onchange="change_property_datatype($(this).find(\'option:selected\').text(),$(this).parent().parent().parent().attr(\'id\'));">'+
                         '<option value="Text"> Text  </option>' +
                         '<option value = "Numeric"> Numeric </option>'+
                         '<option value = "Picture"> Picture </option>'+
@@ -152,6 +152,59 @@ and open the template in the editor.
                      calculate_divs ();
                  });
                      
+
+                 
+          function collect_and_send ()
+          {
+              //alert ("Dinamically create class");
+              
+        
+              
+          
+             property_count = $("[id*='dt_prop_']").length;
+             alert (property_count);
+            json = '';
+          
+              for (i=1;i<=property_count;i++)
+              {
+                  //property name
+                  //property_name = $("#dt_prop_"+i+" #property_name").val();
+                  property_name = $("#dt_prop_"+i+" input#property_name").val();
+                  alert (property_name);
+                  property_datatype =  $("#dt_prop_"+i+ " select#property_datatype_"+i+" option:selected").text();
+                  
+                  
+                  
+                  // {"property_name":"property_name_value","property_dataype":"Numeric","integer":"3","decimal":"1"}
+                  json = json+'{"property_name":'+'"'+ property_name + '"' +',' +  '"property_datatype"' + ':' + '"' + property_datatype +'"' ;
+                  
+                  switch (property_datatype.trim())
+                         {
+                             case "Text":
+                                        alert ("Text");
+                                         text_lenght  = $("#dt_prop_"+i+" input#property_text_charcount").val();
+                                         json = json + ","+  '"text_length"' + ':' + '"' + text_lenght +'"';
+                                  break;
+                              case "Numeric":
+                                        alert ("Numeric");
+                                          integer_length =   $("#dt_prop_"+i+" input#property_numeric_integer").val();
+                                          json = json + ","+ '"integer_length"' + ':' + '"' + integer_length +'"' ;
+                                          decimal_length =    $("#dt_prop_"+i+" input#property_numeric_decimal").val();
+                                          json = json + ","+ '"decimal_length"' + ':' + decimal_length;
+                                    break;
+                         }
+                          
+                   json = json + "}";
+
+                   alert (json);
+
+              }
+              
+              
+              
+              
+              
+          }
 
             
       </script>
@@ -243,11 +296,6 @@ and open the template in the editor.
             
             
             
-            
-            
-            
-            
-            
             </div>
             
             
@@ -262,6 +310,7 @@ and open the template in the editor.
         
         <div  id="footer">
             This is the footer row.
+            <button type="button"  onclick="collect_and_send();"> Rögzítés </button>
             
         </div>
         </div>
