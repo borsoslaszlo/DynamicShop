@@ -13,7 +13,7 @@ and open the template in the editor.
         
         <link  rel ="stylesheet" href="css/stylesheet.css"  />
         <script src="js/jquery-3.0.0.min.js"></script>
-        
+        <script src="js/messagebox.js"></script>
         <script type="text/javascript">
             
             function change_property_datatype (datatype,divid)
@@ -79,10 +79,11 @@ and open the template in the editor.
                 
                 
                 $('<div id ="dt_prop_'+(count_dt_prop+1).toString()+'" class="datatype_and_property">' +
-                    '<div class="remove_div" > <input type="button" onclick=" remove_datatype ($(this).parent().parent().attr(\'id\'));" />  </div>'+
+                    '<div class="remove_div" >'+' \n\
+                    <input type="button"  onclick=" remove_datatype ($(this).parent().parent().attr(\'id\'));" />  </div>'+
                     '<div class = "datatype"> '+
                     '<div>  Property name :'+
-                    '<input  id="property_name">'+
+                    '<input  id="property_name" pattern = "^[a-zA-Z][a-zA-Z0-9]*">'+
                         '<label> Property datatype</label>'+  
                         '<select class="select_target" id="property_datatype_'+(count_dt_prop+1).toString()+'" onchange="change_property_datatype($(this).find(\'option:selected\').text(),$(this).parent().parent().parent().attr(\'id\'));">'+
                         '<option value="Text"> Text  </option>' +
@@ -106,6 +107,11 @@ and open the template in the editor.
              
              
             }
+            
+            
+            
+            
+            
             
         
               function calculate_divs()
@@ -153,12 +159,31 @@ and open the template in the editor.
                  });
                      
 
-                 
+
+
+          function regexp_test (regexp,text)
+          {
+              re = new RegExp (regexp,"g");
+              
+              
+              
+              //alert (regexp);
+              
+              if (re.test(text))
+               return  true;
+               else 
+               return false;
+          }
+
+
+
           function collect_and_send ()
           {
               //alert ("Dinamically create class");
               
         
+              var errors = new Array ();
+              
               
           
              property_count = $("[id*='dt_prop_']").length;
@@ -170,8 +195,44 @@ and open the template in the editor.
                   //property name
                   //property_name = $("#dt_prop_"+i+" #property_name").val();
                   property_name = $("#dt_prop_"+i+" input#property_name").val();
-                  alert (property_name);
+                  
+                  
+                  if (!regexp_test ("^[a-z|A-Z][A-Za-z0-9_]*",property_name))
+                  {
+                     // alert ("Nem megfelelő tulajdonságnév.Betűvel kell kezdődnie, betűt, számot és _ jelet tartalmazhat! " +property_name);
+                      errors.push("Nem megfelelő tulajdonságnév.Betűvel kell kezdődnie, betűt, számot és _ jelet tartalmazhat! "+property_name);
+                      
+                      
+                      
+                      
+                      //messagebox ("Nem megfelelő tulajdonságnév.Betűvel kell kezdődnie, betűt, számot és _ jelet tartalmazhat!");
+                      //return ;
+                      
+                  }
+          
+          
+                  //alert (property_name);
                   property_datatype =  $("#dt_prop_"+i+ " select#property_datatype_"+i+" option:selected").text();
+                  
+
+                 if (!regexp_test ("^[Text|Numeric|Picture]",property_datatype.trim()))
+                  {
+                      //alert ("Nem megfelelő tulajdonság adattípus. Text|Numeric|Picture!  Kis huncut.");
+                      errors.push ("Nem megfelelő tulajdonság adattípus. Text|Numeric|Picture!  Kis huncut. ")+property_name;
+                      //messagebox ("Nem megfelelő tulajdonság adattípus. Text|Numeric|Picture!  Kis huncut. "+property_name);
+                      
+                      
+                      //return ;
+                      
+                  }
+
+                  //if (!(/^[Text|Numeric|Picture]/.test(property_datatype.trim())))
+                  //{
+                   //   alert ("Nem megfelelő tulajdonság adattípus. Text|Numeric|Picture!  Kis huncut.");
+                    //  return ;
+                      
+                  //}
+                  
                   
                   
                   
@@ -181,16 +242,40 @@ and open the template in the editor.
                   switch (property_datatype.trim())
                          {
                              case "Text":
-                                        alert ("Text");
+                                        //alert ("Text");
                                          text_lenght  = $("#dt_prop_"+i+" input#property_text_charcount").val();
+                                         
+                                         
+                                          if (!regexp_test("^[1-9].*",text_lenght.trim()))
+                                            {
+                                             //alert ("A szöveg hosszának nagyobbnak kell lenni mint 0! ");
+                                            errors.push ("A szöveg hosszának nagyobbnak kell lenni mint 0! "+property_name);
+                                            //return ;
+                                            }
+                                         
+                                         
                                          json = json + ","+  '"text_length"' + ':' + '"' + text_lenght +'"';
                                   break;
                               case "Numeric":
-                                        alert ("Numeric");
+                                        //alert ("Numeric");
                                           integer_length =   $("#dt_prop_"+i+" input#property_numeric_integer").val();
+
+                                          if (!regexp_test("^[0-9].*",integer_length.trim()))
+                                            {
+                                            //alert ("Az egészek hossza nem lehet 0! ");
+                                            errors.push ("Az egészek hossza nem lehet 0! "+property_name);
+                                            //return ;
+                                            }
                                           json = json + ","+ '"integer_length"' + ':' + '"' + integer_length +'"' ;
                                           decimal_length =    $("#dt_prop_"+i+" input#property_numeric_decimal").val();
-                                          json = json + ","+ '"decimal_length"' + ':' + decimal_length;
+                                          if (!regexp_test("^[0-9].*",decimal_length.trim()))
+                                            {
+                                            //alert ("Nem megfelelő érték a tizedesjegyek hosszában! ");
+                                            errors.push ("Nem megfelelő érték a tizedesjegyek hosszában! "+property_name);
+                                            //return ;
+                                            }
+                    
+                                            json = json + ","+ '"decimal_length"' + ':' + decimal_length;
                                     break;
                          }
                           
@@ -200,8 +285,19 @@ and open the template in the editor.
 
               }
               
-              
-              
+              alert (errors.length);
+              if (errors.length!==0) 
+              { 
+                  alert ("jjk");
+                  var errortext ='';
+                  
+                  for (j=0 ; j<errors.length; j++)
+                  {
+                      errortext = errortext + errors[j] +"<br>";
+                  }
+                  
+                  messagebox (errortext);
+              }
               
               
           }
@@ -230,7 +326,8 @@ and open the template in the editor.
             <div  class="main" id="main" >
                 
                 
-                <div >
+
+                <div>
                     <p>
                      <?php print "Árucikk neve"?>
                     <input id="input_article_name">
@@ -316,6 +413,7 @@ and open the template in the editor.
         </div>
 
             
+        
         
     </body>
 </html>
