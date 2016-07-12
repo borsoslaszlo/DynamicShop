@@ -12,9 +12,18 @@ and open the template in the editor.
         
         
         <link  rel ="stylesheet" href="css/stylesheet.css"  />
+        
+        <link href="css/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
+        <link href="css/jquery-ui.structure.min.css" rel="stylesheet" type="text/css"/>
+        <link href="css/jquery-ui.theme.min.css" rel="stylesheet" type="text/css"/>
+        
+        
         <script src="js/jquery-3.0.0.min.js"></script>
+        <script src="js/jquery-ui.min.js"></script>
         <script src="js/messagebox.js"></script>
         <script type="text/javascript">
+            
+            
             
             function change_property_datatype (datatype,divid)
             {
@@ -187,8 +196,8 @@ and open the template in the editor.
               
           
              property_count = $("[id*='dt_prop_']").length;
-             alert (property_count);
-            json = '';
+             //alert (property_count);
+            json = '{"article":';
           
               for (i=1;i<=property_count;i++)
               {
@@ -246,12 +255,15 @@ and open the template in the editor.
                                          text_lenght  = $("#dt_prop_"+i+" input#property_text_charcount").val();
                                          
                                          
-                                          if (!regexp_test("^[1-9].*",text_lenght.trim()))
+                                          if (!regexp_test("^[1-9][0-9]*$",text_lenght.trim()))
                                             {
                                              //alert ("A szöveg hosszának nagyobbnak kell lenni mint 0! ");
-                                            errors.push ("A szöveg hosszának nagyobbnak kell lenni mint 0! "+property_name);
+                                            errors.push ("A szöveg hosszának nagyobbnak kell lenni mint 0, és csak számot tartalmazhat! "+property_name);
                                             //return ;
                                             }
+                                         
+                                         
+                                         
                                          
                                          
                                          json = json + ","+  '"text_length"' + ':' + '"' + text_lenght +'"';
@@ -263,7 +275,7 @@ and open the template in the editor.
                                           if (!regexp_test("^[0-9].*",integer_length.trim()))
                                             {
                                             //alert ("Az egészek hossza nem lehet 0! ");
-                                            errors.push ("Az egészek hossza nem lehet 0! "+property_name);
+                                            errors.push ("Nem megfelelő érték az egészjegyek hosszában! "+property_name);
                                             //return ;
                                             }
                                           json = json + ","+ '"integer_length"' + ':' + '"' + integer_length +'"' ;
@@ -274,6 +286,16 @@ and open the template in the editor.
                                             errors.push ("Nem megfelelő érték a tizedesjegyek hosszában! "+property_name);
                                             //return ;
                                             }
+                                          if (regexp_test("^[0].*",decimal_length.trim()) &&  regexp_test("^[0].*",integer_length.trim())  )
+                                            {
+                                            //alert ("Nem megfelelő érték a tizedesjegyek hosszában! ");
+                                            errors.push ("Nem lehet 0 az egész és a tizedesjegyek száma is! "+property_name);
+                                            //return ;
+                                            }
+
+
+                    
+                    
                     
                                             json = json + ","+ '"decimal_length"' + ':' + decimal_length;
                                     break;
@@ -281,23 +303,36 @@ and open the template in the editor.
                           
                    json = json + "}";
 
-                   alert (json);
+                   //alert (json);
 
               }
               
-              alert (errors.length);
+              
+               json = json + "}";  // article closing 
+              
+              
+              //alert (errors.length);
               if (errors.length!==0) 
               { 
-                  alert ("jjk");
+                  
                   var errortext ='';
                   
                   for (j=0 ; j<errors.length; j++)
                   {
-                      errortext = errortext + errors[j] +"<br>";
+                      errortext = errortext + errors[j] +"<br><br>";
                   }
                   
-                  messagebox (errortext);
+                
+                alert_x (errortext,"Hiba!");
+                //messagebox (errortext);
               }
+              
+              else 
+              {
+                  alert (json);
+              }
+              
+              
               
               
           }
@@ -413,7 +448,6 @@ and open the template in the editor.
         </div>
 
             
-        
         
     </body>
 </html>
