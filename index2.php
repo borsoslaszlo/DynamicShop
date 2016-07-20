@@ -91,17 +91,17 @@ and open the template in the editor.
                     '<div class="remove_div" >'+' \n\
                     <input type="button"  onclick=" remove_datatype ($(this).parent().parent().attr(\'id\'));" />  </div>'+
                     '<div class = "datatype"> '+
-                    '<div>  Property name :'+
+                    '<div>  Tulajdonság neve :'+
                     '<input  id="property_name" pattern = "^[a-zA-Z][a-zA-Z0-9]*">'+
-                        '<label> Property datatype</label>'+  
-                        '<select class="select_target" id="property_datatype_'+(count_dt_prop+1).toString()+'" onchange="change_property_datatype($(this).find(\'option:selected\').text(),$(this).parent().parent().parent().attr(\'id\'));">'+
-                        '<option value="Text"> Text  </option>' +
-                        '<option value = "Numeric"> Numeric </option>'+
-                        '<option value = "Picture"> Picture </option>'+
+                        '<label> Tulajdonság adattípusa :</label>'+  
+                        '<select class="select_target" id="property_datatype_'+(count_dt_prop+1).toString()+'" onchange="change_property_datatype($(this).find(\'option:selected\').val(),$(this).parent().parent().parent().attr(\'id\'));">'+
+                        '<option value="Text"> Szöveg  </option>' +
+                        '<option value = "Numeric"> Szám  </option>'+
+                        '<option value = "Picture"> Kép </option>'+
                         '</select> '+ 
                         '</div>'+
                         '</div> ' +
-                        '<div class="datatype_property"><p>Property charater number: <input id="property_text_charcount"></p></div>'+
+                        '<div class="datatype_property"><p> Tulajdonság szöveg max. hossza: <input id="property_text_charcount"></p></div>'+
                    
                         '</div>'
                     ).appendTo(div_article_properties);
@@ -216,7 +216,7 @@ and open the template in the editor.
                   property_name = $("#dt_prop_"+i+" input#property_name").val();
                   
                   
-                  if (!regexp_test ("^[a-z|A-Z][A-Za-z0-9_]*",property_name))
+                  if (!regexp_test ("^[a-z|A-Z|áéiíóöőúüű|ÁÉÍÓÖŐÚÜŰ][A-Za-z0-9_]*",property_name))
                   {
                      // alert ("Nem megfelelő tulajdonságnév.Betűvel kell kezdődnie, betűt, számot és _ jelet tartalmazhat! " +property_name);
                       errors.push("Nem megfelelő tulajdonságnév.Betűvel kell kezdődnie, betűt, számot és _ jelet tartalmazhat! "+property_name);
@@ -231,8 +231,8 @@ and open the template in the editor.
           
           
                   //alert (property_name);
-                  property_datatype =  $("#dt_prop_"+i+ " select#property_datatype_"+i+" option:selected").text();
-                  
+                  //property_datatype =  $("#dt_prop_"+i+ " select#property_datatype_"+i+" option:selected").text();
+                  property_datatype =  $("#dt_prop_"+i+ " select#property_datatype_"+i+" option:selected").val();
 
                  if (!regexp_test ("^[Text|Numeric|Picture]",property_datatype.trim()))
                   {
