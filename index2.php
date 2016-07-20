@@ -166,7 +166,7 @@ and open the template in the editor.
             $(window).bind("load", function (){
                      calculate_divs ();
                  });
-                     
+                 
 
 
 
@@ -188,6 +188,9 @@ and open the template in the editor.
 
           function collect_and_send ()
           {
+              
+              
+              
               //alert ("Dinamically create class");
               
         
@@ -198,6 +201,13 @@ and open the template in the editor.
              property_count = $("[id*='dt_prop_']").length;
              //alert (property_count);
             json = '{"article":';
+            //var properties_array  =[];
+            
+            var article = {
+                  article_name :  $("#input_article_name").val() ,
+                  properties  :  []
+              };
+          
           
               for (i=1;i<=property_count;i++)
               {
@@ -247,6 +257,9 @@ and open the template in the editor.
                   
                   // {"property_name":"property_name_value","property_dataype":"Numeric","integer":"3","decimal":"1"}
                   json = json+'{"property_name":'+'"'+ property_name + '"' +',' +  '"property_datatype"' + ':' + '"' + property_datatype +'"' ;
+                  var text_lenght=0;
+                  var integer_length=0;
+                  var decimal_length=0;
                   
                   switch (property_datatype.trim())
                          {
@@ -300,12 +313,36 @@ and open the template in the editor.
                                             json = json + ","+ '"decimal_length"' + ':' + decimal_length;
                                     break;
                          }
+                          var property =
+                                  {name : property_name,
+                                   datatype : property_datatype,
+                                   text_lenght: text_lenght ,
+                                   integer_lenght: integer_length,
+                                   decimal_lenght: decimal_length
+                                    };
+                        
+                        /*
+                        if (typeof text_lenght!== 'undefined') {property.text_lenght =  text_lenght;} else {property.text_lenght=0;}
+                        if (typeof integer_length!=='undefined') {property.integer_lenght= integer_length;} else {property.integer_lenght=0;}
+                        if (typeof decimal_length!=='undefined') {property.decimal_lenght= decimal_length;} else {property.decimal_lenght=0;}
+                        */
+                        
+                //properties_array.push [property];
                           
+                          
+               article.properties.push(property);
                    json = json + "}";
 
                    //alert (json);
 
               }
+              
+              
+              
+              
+              
+              
+                json_from_struct = JSON.stringify(article);
               
               
                json = json + "}";  // article closing 
@@ -329,7 +366,8 @@ and open the template in the editor.
               
               else 
               {
-                  alert (json);
+                  //alert (json);
+                  alert (json_from_struct);
               }
               
               
