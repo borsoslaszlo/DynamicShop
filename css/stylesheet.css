@@ -22,6 +22,16 @@
 
         .remove_div
         {
-            
+            float: right;
         }
        
+        
+        #messagebox
+        {
+            visibility: hidden;
+            position: fixed;
+            
+            
+        }
+        
+        
